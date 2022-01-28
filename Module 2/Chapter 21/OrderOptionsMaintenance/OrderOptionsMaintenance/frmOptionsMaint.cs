@@ -1,4 +1,13 @@
-﻿using OrderOptionsMaintenance.Models;
+﻿/* 
+* Marshall Westbrook
+* CPT-231-S14
+* M1-2 Assignment
+* Spring 2022
+* A project that demonstrates how to use ADO.NET
+*/
+
+
+using OrderOptionsMaintenance.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
