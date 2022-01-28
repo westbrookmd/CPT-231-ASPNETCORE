@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrderOptionsMaintenance.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,7 @@ namespace OrderOptionsMaintenance
 {
     public partial class frmOptionsMaint : Form
     {
+        OrderOption currentOrder = null;
         public frmOptionsMaint()
         {
             InitializeComponent();
@@ -19,14 +21,31 @@ namespace OrderOptionsMaintenance
 
         private void frmOptionsMaint_Load(object sender, EventArgs e)
         {
-
+            currentOrder = OrderOptionDB.GetOrderOptions();
+            txtSalesTax.Text = currentOrder.SalesTaxRate.ToString();
+            txtShipFirstBook.Text = currentOrder.FirstBookShipCharge.ToString();
+            txtShipAddlBook.Text = currentOrder.AdditionalBookShipCharge.ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            OrderOption oldOptions = currentOrder;
             if (IsValidData())
             {
-
+                if(Decimal.TryParse(txtSalesTax.Text, out decimal salesTaxRate))
+                {
+                    currentOrder.SalesTaxRate = salesTaxRate;
+                }
+                if (Decimal.TryParse(txtShipFirstBook.Text, out decimal shipFirstBook))
+                {
+                    currentOrder.FirstBookShipCharge = shipFirstBook;
+                }
+                if (Decimal.TryParse(txtShipAddlBook.Text, out decimal shipAddlBook))
+                {
+                    currentOrder.AdditionalBookShipCharge = shipAddlBook;
+                }
+                OrderOptionDB.UpdateOrderOption(oldOptions, currentOrder);
+                
             }
         }
 

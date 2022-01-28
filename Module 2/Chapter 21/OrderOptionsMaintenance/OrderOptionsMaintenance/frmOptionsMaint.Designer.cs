@@ -6,6 +6,7 @@
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -139,6 +140,8 @@
             this.Load += new System.EventHandler(this.frmOptionsMaint_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
+
+
 
         }
 
