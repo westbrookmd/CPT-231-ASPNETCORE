@@ -31,6 +31,7 @@ namespace OrderOptionsMaintenance.Models
                     AdditionalBookShipCharge = (decimal)reader["AdditionalBookShipCharge"]
                 };
             }
+            connection.Close();
             return orderOption;
         }
 
@@ -55,6 +56,7 @@ namespace OrderOptionsMaintenance.Models
             connection.Open();
 
             int rowsreturned = command.ExecuteNonQuery();
+            connection.Close();
             return (rowsreturned > 0);
         }
     }
