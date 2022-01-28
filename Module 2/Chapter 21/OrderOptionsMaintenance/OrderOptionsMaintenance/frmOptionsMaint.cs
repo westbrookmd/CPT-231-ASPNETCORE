@@ -32,6 +32,8 @@ namespace OrderOptionsMaintenance
             OrderOption oldOptions = currentOrder;
             if (IsValidData())
             {
+                // cannot implicitly or explicitly convert a string to a decimal
+                // I used tryparses even though the data has already been validated
                 if(Decimal.TryParse(txtSalesTax.Text, out decimal salesTaxRate))
                 {
                     currentOrder.SalesTaxRate = salesTaxRate;

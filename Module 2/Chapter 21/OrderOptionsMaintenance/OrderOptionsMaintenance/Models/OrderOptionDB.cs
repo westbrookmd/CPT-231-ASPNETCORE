@@ -36,15 +36,13 @@ namespace OrderOptionsMaintenance.Models
 
         public static bool UpdateOrderOption(OrderOption oldOptions, OrderOption newOptions)
         {
+            // Not included a WHERE clause since there is only one entry
             string updateStatement =
                 "UPDATE OrderOptions SET " +
                 "SalesTaxRate = @NewSalesTaxRate, " +
                 "FirstBookShipCharge = @NewFirstBookShipCharge, " +
                 "AdditionalBookShipCharge = @NewAdditionalBookShipCharge " +
-                "FROM OrderOptions " +
-                "WHERE SalesTaxRate = @OldSalesTaxRate " +
-                "AND FirstBookShipCharge = @OldFirstBookShipCharge " +
-                "AND AdditionalBookShipCharge = @OldAdditionalBookShipCharge ";
+                "FROM OrderOptions ";
             using SqlConnection connection = new SqlConnection(MMABooksDB.ConnectionString);
             using SqlCommand command = new SqlCommand(
                 updateStatement, connection);
@@ -57,7 +55,6 @@ namespace OrderOptionsMaintenance.Models
             connection.Open();
 
             int rowsreturned = command.ExecuteNonQuery();
-            System.Console.WriteLine(rowsreturned);
             return (rowsreturned > 0);
         }
     }
