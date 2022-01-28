@@ -7,14 +7,16 @@ namespace OrderOptionsMaintenance.Models
     {
         public static OrderOption GetOrderOptions()
         {
-            OrderOption orderOption = null;
+            OrderOption orderOption = new OrderOption();
             string getOrderStatement =
-                "SELECT SalesTax, FirstBookShipCharge, AdditionalBookShipCharge" +
-                "FROM OrderOptionDB";
+                "SELECT SalesTaxRate, FirstBookShipCharge, AdditionalBookShipCharge";
             using SqlConnection connection = new SqlConnection(MMABooksDB.ConnectionString);
             using SqlCommand command = new SqlCommand(
                 getOrderStatement, connection);
-            command.Parameters.Add(getOrderStatement);
+            command.Parameters.AddWithValue("@SalesTax", orderOption.SalesTaxRate);
+            command.Parameters.AddWithValue("@FirstBookShipCharge", orderOption.FirstBookShipCharge);
+            command.Parameters.AddWithValue("@AdditionalBookShipCharge", orderOption.AdditionalBookShipCharge);
+
             connection.Open();
 
             using SqlDataReader reader = command.ExecuteReader(
@@ -53,6 +55,7 @@ namespace OrderOptionsMaintenance.Models
             connection.Open();
 
             int rowsreturned = command.ExecuteNonQuery();
+            connection.Close();
             return (rowsreturned > 0);
         }
     }
