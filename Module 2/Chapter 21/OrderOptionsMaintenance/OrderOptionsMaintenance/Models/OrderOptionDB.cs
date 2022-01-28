@@ -9,7 +9,8 @@ namespace OrderOptionsMaintenance.Models
         {
             OrderOption orderOption = new OrderOption();
             string getOrderStatement =
-                "SELECT SalesTaxRate, FirstBookShipCharge, AdditionalBookShipCharge";
+                "SELECT SalesTaxRate, FirstBookShipCharge, AdditionalBookShipCharge " +
+                "FROM OrderOptions";
             using SqlConnection connection = new SqlConnection(MMABooksDB.ConnectionString);
             using SqlCommand command = new SqlCommand(
                 getOrderStatement, connection);
@@ -36,13 +37,14 @@ namespace OrderOptionsMaintenance.Models
         public static bool UpdateOrderOption(OrderOption oldOptions, OrderOption newOptions)
         {
             string updateStatement =
-                "UPDATE OrderOption SET" +
-                "SalesTaxRate = @NewSalesTaxRate," +
-                "FirstBookShipCharge = @NewFirstBookShipCharge," +
-                "AdditionalBookShipCharge = @NewAdditionalBookShipCharge" +
-                "WHERE SalesTaxRate = @OldSalesTaxRate," +
-                "AND FirstBookShipCharge = @OldFirstBookShipCharge," +
-                "AND AdditionalBookShipCharge = @OldAdditionalBookShipCharge";
+                "UPDATE OrderOptions SET " +
+                "SalesTaxRate = @NewSalesTaxRate, " +
+                "FirstBookShipCharge = @NewFirstBookShipCharge, " +
+                "AdditionalBookShipCharge = @NewAdditionalBookShipCharge " +
+                "FROM OrderOptions " +
+                "WHERE SalesTaxRate = @OldSalesTaxRate " +
+                "AND FirstBookShipCharge = @OldFirstBookShipCharge " +
+                "AND AdditionalBookShipCharge = @OldAdditionalBookShipCharge ";
             using SqlConnection connection = new SqlConnection(MMABooksDB.ConnectionString);
             using SqlCommand command = new SqlCommand(
                 updateStatement, connection);
@@ -55,7 +57,7 @@ namespace OrderOptionsMaintenance.Models
             connection.Open();
 
             int rowsreturned = command.ExecuteNonQuery();
-            connection.Close();
+            System.Console.WriteLine(rowsreturned);
             return (rowsreturned > 0);
         }
     }
