@@ -1,11 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿/* 
+* Marshall Westbrook
+* CPT-231-S14
+* U1-M3 Assignment
+* Spring 2022
+* A project that demonstrates how to use the DataGridView control
+* 
+* Extra Credit:
+*   1) Paging
+*   2) Exit confirmation
+*   3) Fixed bug with clicking modify/delete column headers that 
+*      results in an out of bounds of array exception that exists
+*      in the book's code
+*      
+* Future considerations:
+*   1) Consider rate limiting the db calls both within the client 
+*      and from the db.
+*   2) Consider caching a certain amount of pages to reduce the
+*      db calls. Offer a "refresh" button on data that is already
+*      cached.
+*   3) Provide a search function that returns the top 10 results.
+*      This could reduce the db calls and allow for more efficient
+*      usage of the db.
+*/
+
+using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -22,8 +43,11 @@ namespace StateMaintenance
 
         MMABooksContext context = new MMABooksContext();
         State selectedState = null;
-        public int selectedPage = 1;
-        public int pageSize = 10;
+
+        // paging values
+        int selectedPage = 1;
+        int pageSize = 10;
+        // programmatically set within the UpdateGUI method
         int maxPage;
 
         // private constants for the index values of the Modify and Delete button columns
@@ -37,18 +61,21 @@ namespace StateMaintenance
 
         private void DisplayStates()
         {
-            int skip = pageSize * (selectedPage - 1);
             // This method is called every time a change is made - assume data is in the columns
             // clear all current columns
             dgvStates.Columns.Clear();
+
+            // sets the amount of states to skip before taking pageSize
+            int statesToSkip = pageSize * (selectedPage - 1);
 
             // get states
             var states = context.States
                 .OrderBy(c => c.StateName)
                 .Select(c => new { c.StateCode, c.StateName })
-                .Skip(skip)
+                .Skip(statesToSkip)
                 .Take(pageSize)
                 .ToList();
+
             // bind the grid
             dgvStates.DataSource = states;
 
