@@ -22,9 +22,11 @@ namespace StateMaintenance
 
         MMABooksContext context = new MMABooksContext();
         State selectedState = null;
+        public int selectedPage = 1;
+        public int pageSize = 10;
+        int maxPage;
 
         // private constants for the index values of the Modify and Delete button columns
-
         private const int modifyButtonColumnIndex = 2;
         private const int deleteButtonColumnIndex = 3;
 
@@ -35,18 +37,26 @@ namespace StateMaintenance
 
         private void DisplayStates()
         {
+            int skip = pageSize * (selectedPage - 1);
+            // This method is called every time a change is made - assume data is in the columns
+            // clear all current columns
             dgvStates.Columns.Clear();
-            // get states and bind grid
+
+            // get states
             var states = context.States
                 .OrderBy(c => c.StateName)
-                .Select(c => new { c.StateCode, c.StateName  })
+                .Select(c => new { c.StateCode, c.StateName })
+                .Skip(skip)
+                .Take(pageSize)
                 .ToList();
+            // bind the grid
             dgvStates.DataSource = states;
 
             // format grid
             dgvStates.ColumnHeadersDefaultCellStyle.BackColor = Color.Gold;
             dgvStates.EnableHeadersVisualStyles = false;
             dgvStates.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+
             // State Code Column
             dgvStates.Columns[0].HeaderText = "Code";
             dgvStates.Columns[0].Width = 40;
@@ -54,20 +64,58 @@ namespace StateMaintenance
             // State Name Column
             dgvStates.Columns[1].Width = 150;
 
-            // Modify and Delete Button Columns
+            // Modify Button Column
             DataGridViewButtonColumn modifyButtonColumn = new DataGridViewButtonColumn();
             modifyButtonColumn.HeaderText = "Modify";
             modifyButtonColumn.UseColumnTextForButtonValue = true;
             modifyButtonColumn.Text = "Modify";
 
+            // Delete Button Column
             DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
             deleteButtonColumn.HeaderText = "Delete";
             deleteButtonColumn.UseColumnTextForButtonValue = true;
             deleteButtonColumn.Text = "Delete";
 
+            // Insert Button Columns
             dgvStates.Columns.Insert(modifyButtonColumnIndex, modifyButtonColumn);
             dgvStates.Columns.Insert(deleteButtonColumnIndex, deleteButtonColumn);
+            
+            // Update the page controls
+            UpdateGUI();
+        }
 
+        private void UpdateGUI()
+        {
+            /*consolidates all of the UI update logic into a single method.
+            in the future, consider separating each set of logic into separate methods
+            if different functionality is added */
+
+            // consider only doing this once and then after adding/removing states
+            maxPage = (context.States.Count() / pageSize);
+
+            // Page Number Up/Down
+            pageNumberUpDown.Maximum = maxPage;
+            pageNumberUpDown.Value = selectedPage;
+
+            // Previous Button
+            if(selectedPage == 1)
+            {
+                btnPreviousPage.Enabled = false;
+            }
+            else
+            {
+                btnPreviousPage.Enabled = true;
+            }
+
+            // Next Button
+            if (selectedPage == maxPage)
+            {
+                btnNextPage.Enabled = false;
+            }
+            else
+            {
+                btnNextPage.Enabled = true;
+            }
         }
 
         private void ModifyState()
@@ -193,17 +241,23 @@ namespace StateMaintenance
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            // confirmation dialog to prevent accidental exits
+            DialogResult = MessageBox.Show("Are you sure you want to exit?", "Exit Prompt", MessageBoxButtons.YesNo);
+            if (DialogResult == DialogResult.Yes)
+            {
+                this.Close();
+            }   
         }
 
         private void dgvStates_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == modifyButtonColumnIndex || e.ColumnIndex == deleteButtonColumnIndex)
+            // make sure we're clicking on the modify/delete column and we aren't clicking the header row
+            if ((e.ColumnIndex == modifyButtonColumnIndex || e.ColumnIndex == deleteButtonColumnIndex) && e.RowIndex > -1)
             {
-
+                // get the statecode
                 string stateCode = dgvStates.Rows[e.RowIndex].Cells[0].Value.ToString();
-                //currentState.StateName = dgvStates.Rows[e.RowIndex].Cells[1].Value.ToString();
-                // set the selected state to our current state
+
+                // set the selected state to our current state from the db
                 selectedState = context.States.Find(stateCode);
 
                 if (e.ColumnIndex == modifyButtonColumnIndex)
@@ -214,6 +268,46 @@ namespace StateMaintenance
                 {
                     DeleteState();
                 }
+            }
+        }
+
+        private void btnPreviousPage_Click(object sender, EventArgs e)
+        {
+            if(selectedPage > 1)
+            {
+                selectedPage -= 1;
+            }
+            DisplayStates();
+        }
+
+        private void btnNextPage_Click(object sender, EventArgs e)
+        {
+            // make sure the max page is set already
+            if(maxPage != 0)
+            {
+                // if we're not at the max page, go to the next one
+                if(selectedPage < maxPage)
+                {
+                    selectedPage += 1;
+                }
+                
+            }
+            // view the next page
+            DisplayStates();
+        }
+
+        private void btnGoPage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // attempt to validate the number entered and set the selectedPage as this
+                selectedPage = int.Parse(pageNumberUpDown.Value.ToString());
+                // view the next page
+                DisplayStates();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Invalid page number.", "Bad Page Number");
             }
         }
     }
