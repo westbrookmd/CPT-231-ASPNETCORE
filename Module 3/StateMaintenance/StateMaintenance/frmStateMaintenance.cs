@@ -64,6 +64,7 @@ namespace StateMaintenance
             // This method is called every time a change is made - assume data is in the columns
             // clear all current columns
             dgvStates.Columns.Clear();
+            dgvStates.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // sets the amount of states to skip before taking pageSize
             int statesToSkip = pageSize * (selectedPage - 1);
@@ -86,27 +87,27 @@ namespace StateMaintenance
 
             // State Code Column
             dgvStates.Columns[0].HeaderText = "Code";
-            dgvStates.Columns[0].Width = 40;
-
-            // State Name Column
-            dgvStates.Columns[1].Width = 150;
 
             // Modify Button Column
             DataGridViewButtonColumn modifyButtonColumn = new DataGridViewButtonColumn();
             modifyButtonColumn.HeaderText = "Modify";
             modifyButtonColumn.UseColumnTextForButtonValue = true;
             modifyButtonColumn.Text = "Modify";
+            
 
             // Delete Button Column
             DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
             deleteButtonColumn.HeaderText = "Delete";
             deleteButtonColumn.UseColumnTextForButtonValue = true;
             deleteButtonColumn.Text = "Delete";
+            
 
             // Insert Button Columns
             dgvStates.Columns.Insert(modifyButtonColumnIndex, modifyButtonColumn);
             dgvStates.Columns.Insert(deleteButtonColumnIndex, deleteButtonColumn);
-            
+
+            dgvStates.Columns[2].Width = 50;
+            dgvStates.Columns[3].Width = 50;
             // Update the page controls
             UpdateGUI();
         }
