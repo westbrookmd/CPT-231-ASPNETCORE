@@ -349,3 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /Module 3/CPT231_U1-M3_MarshallWestbrook.zip
+*.zip
