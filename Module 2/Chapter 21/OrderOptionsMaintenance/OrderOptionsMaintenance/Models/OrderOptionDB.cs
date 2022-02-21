@@ -12,6 +12,7 @@ namespace OrderOptionsMaintenance.Models
 {
     public static class OrderOptionDB
     {
+        // We aren't catching exceptions here at all - these will bubble up to calling methods
         public static OrderOption GetOrderOptions()
         {
             // create a default orderoption
@@ -29,7 +30,7 @@ namespace OrderOptionsMaintenance.Models
             command.Parameters.AddWithValue("@AdditionalBookShipCharge", orderOption.AdditionalBookShipCharge);
 
             connection.Open();
-            // only returning a single result (doing this here instead of in a WHERE clause
+            // only returning a single result (doing this here instead of in a WHERE clause)
             using SqlDataReader reader = command.ExecuteReader(
                 CommandBehavior.SingleResult & CommandBehavior.CloseConnection);
             if (reader.Read())
