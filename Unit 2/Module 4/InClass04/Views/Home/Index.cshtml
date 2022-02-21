@@ -1,0 +1,21 @@
+﻿@model DiceRoller
+<h1>Dice Rolling Page</h1>
+<form asp-action="Index" method="post">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="@Model.Sides">Sides: </label>
+        <input asp-for="@Model.Sides"/>
+    </div>
+    <div>
+        <label asp-for="@Model.DiceCount">DiceCount: </label>
+        <input asp-for="@Model.DiceCount"/>
+    </div>
+    <div>
+        <label>Roll: </label>
+        <input value="@Model.Roll()"/>
+    </div>
+    <button type="submit" >Roll</button>
+</form>
+@{
+    
+}

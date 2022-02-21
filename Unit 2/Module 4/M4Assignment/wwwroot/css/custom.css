@@ -1,0 +1,14 @@
+﻿/* Added CSS Styling here */
+
+form > div {
+    margin: .5em;
+}
+
+form{
+    color:#ac1c1c;
+    font-size:18px;
+}
+
+h1{
+    color:#3b6aca;
+}
