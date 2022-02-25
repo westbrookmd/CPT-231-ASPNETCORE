@@ -4,6 +4,10 @@
     ViewBag.Title = "Price Quotation";
 }
 
+<header class="jumotron">
+    <h1 class="mt-3"><span class="fas fa-money-bill"/>@ViewBag.Title</h1>
+</header>
+
 <div asp-validation-summary="All"></div>
 
 <form asp-action="Index" method="post">
@@ -24,7 +28,7 @@
         <label>@ViewBag.Total.ToString("c2")</label>
     </div>
     <div>
-        <button type="submit">Calculate</button>
+        <button class="btn btn-primary" type="submit">Calculate</button>
         <a asp-action="Index">Clear</a>
     </div>
 </form>
