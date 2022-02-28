@@ -1,19 +1,19 @@
-﻿body {
-    padding: 1em;
-    font-family: Arial, Arial, Helvetica, sans-serif;
+﻿
+
+.row {
+    margin-bottom: .5rem;
 }
 
-h1 {
-    margin-top: 0;
-    color: navy;
+.jumbotron {
+    background-color: green;
 }
 
-label {
-    display: inline-block;
-    width: 10em;
-    padding-right: 1em;
+.jumbotron h1 {
+    color: white;
 }
-
-div {
-    margin-bottom: .5em;
+.btn-primary {
+    color: white;
+    background-color: green;
+    border-color: green;
+    margin: 0px 1em 0px 0px;
 }

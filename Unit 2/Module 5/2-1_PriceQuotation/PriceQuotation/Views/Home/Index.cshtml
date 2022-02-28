@@ -1,34 +1,47 @@
-﻿@model Quotation
+﻿@*
+* Marshall Westbrook
+* CPT-231-S14
+* U2-M5 Assignment
+* Spring 2022
+* A project that demonstrates how to use Boostrap
+*@
+
+@model Quotation
 
 @{
     ViewBag.Title = "Price Quotation";
 }
 
-<header class="jumotron">
-    <h1 class="mt-3"><span class="fas fa-money-bill"/>@ViewBag.Title</h1>
-</header>
+<div class="container">
 
-<div asp-validation-summary="All"></div>
+    <header class="jumbotron">
+    <h1 class="mt-3"><span class="fas fa-money-bill-alt"/> @ViewBag.Title</h1>
+    </header>
 
-<form asp-action="Index" method="post">
-    <div>
-        <label asp-for="Subtotal">Subtotal:</label>
-        <input asp-for="Subtotal" />
+    <form asp-action="Index" method="post">
+    <div class="row">
+        <label asp-for="Subtotal"
+            class="control-label col-sm-12 col-md-3 col-md-3">Subtotal:</label>
+        <input asp-for="Subtotal" class="form-control col-sm-12 col-md-4 col-md-4"/>
+        <span asp-validation-for="Subtotal" class="text-danger col-sm-12 col-md-4 col-md-4"></span>
     </div>
-    <div>
-        <label asp-for="DiscountPercent">Discount percent:</label>
-        <input asp-for="DiscountPercent" />
+    <div class="row">
+        <label asp-for="DiscountPercent" class="control-label col-sm-12 col-md-3 col-md-3">Discount percent:</label>
+        <input asp-for="DiscountPercent" class="form-control col-sm-12 col-md-4 col-md-4" />
+        <span asp-validation-for="DiscountPercent" class="text-danger col-sm-12 col-md-4"></span>
     </div>
-    <div>
-        <label>Discount amount:</label>
-        <label>@ViewBag.Discount.ToString("c2")</label>
+    <div class="row">
+        <label class="control-label col-sm-12 col-md-3 col-md-3">Discount amount:</label>
+        <label class="control-label col-sm-12 col-md-3 col-md-3">@ViewBag.Discount.ToString("c2")</label>
     </div>
-    <div>
-        <label>Total:</label>
-        <label>@ViewBag.Total.ToString("c2")</label>
+    <div class="row">
+        <label class="control-label col-sm-12 col-md-3 col-md-3">Total:</label>
+        <label class="control-label col-sm-12 col-md-3 col-md-3">@ViewBag.Total.ToString("c2")</label>
     </div>
-    <div>
+    <div class="row">
         <button class="btn btn-primary" type="submit">Calculate</button>
-        <a asp-action="Index">Clear</a>
+        <a asp-action="Index" class="btn btn-primary">Clear</a>
     </div>
-</form>
+    </form>
+</div>
+
