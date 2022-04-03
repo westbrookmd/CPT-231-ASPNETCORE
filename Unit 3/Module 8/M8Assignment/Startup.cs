@@ -1,4 +1,4 @@
-using M8Assignment.Models;
+using M8Assignment.Admin.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

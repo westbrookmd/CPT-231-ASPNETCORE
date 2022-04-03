@@ -1,10 +1,12 @@
-﻿using M8Assignment.Models;
+﻿
+using M8Assignment.Admin.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace M8Assignment.Controllers
+namespace M8Assignment.Admin.Controllers
 {
+    [Area("Admin")]
     public class AirportController : Controller
     {
         private AirportContext _airportContext { get; set; }
@@ -12,24 +14,27 @@ namespace M8Assignment.Controllers
         {
             _airportContext = airportContext;
         }
+        [Route("[area]/[controller]s")]
         public IActionResult Index()
         {
             List<Airport> airports = _airportContext.Airports.OrderBy(
                  a => a.AirportID).ToList<Airport>();
             return View(airports);
         }
+        [Route("[area]/[controller]s/Add")]
         [HttpGet]
         public IActionResult Add()
         {
             ViewBag.Title = "Add";
             return View("AddEdit", new Airport());
         }
+        [Route("[area]/[controller]s/AddEdit")]
         [HttpPost]
         public IActionResult AddEdit(Airport airport)
         {
             if (ModelState.IsValid)
             {
-                if(airport.AirportID != 0)
+                if (airport.AirportID != 0)
                 {
                     _airportContext.Airports.Update(airport);
                 }
@@ -49,6 +54,7 @@ namespace M8Assignment.Controllers
                 return View("AddEdit", airport);
             }
         }
+        [Route("[area]/[controller]s/Edit")]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -56,6 +62,7 @@ namespace M8Assignment.Controllers
             Airport airport = _airportContext.Airports.Find(id);
             return View("AddEdit", airport);
         }
+        [Route("[area]/[controller]s/Delete")]
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -63,7 +70,7 @@ namespace M8Assignment.Controllers
             Airport airport = _airportContext.Airports.Find(id);
             return View(airport);
         }
-
+        [Route("[area]/[controller]s/Delete")]
         [HttpPost]
         public IActionResult Delete(Airport airport)
         {

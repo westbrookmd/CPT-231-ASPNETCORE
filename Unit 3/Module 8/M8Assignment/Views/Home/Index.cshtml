@@ -12,10 +12,14 @@
         </tr>
         </thead>
         <tr>
-            <td>Airports List</td>
+            <td>Airport Admin Area</td>
             <td>
-                <a class="btn-primary" asp-controller="Airport" asp-action="Index">Index</a>
+                <a class="btn-primary" asp-area="Admin" asp-controller="Airport" asp-action="Index">Index</a>
             </td>
+        </tr>
+        <tr>
+            <td>Airports User View</td>
+            <td><a class="btn-primary" asp-controller="Home" asp-action="Airport">Index</a></td>
         </tr>
     </table>
 </div>

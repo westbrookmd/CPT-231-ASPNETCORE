@@ -1,4 +1,4 @@
-﻿using M8Assignment.Models;
+﻿using M8Assignment.Admin.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,6 +21,11 @@ namespace M8Assignment.Controllers
 
         [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Airport()
         {
             List<Airport> airports = _airportContext.Airports.OrderBy(
                 a => a.AirportID).ToList<Airport>();

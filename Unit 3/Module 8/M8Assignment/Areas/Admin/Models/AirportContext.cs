@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace M8Assignment.Models
+namespace M8Assignment.Admin.Models
 {
     public class AirportContext : DbContext
     {

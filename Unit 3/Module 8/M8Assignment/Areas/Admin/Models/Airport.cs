@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace M8Assignment.Models
+namespace M8Assignment.Admin.Models
 {
     public class Airport
     {
