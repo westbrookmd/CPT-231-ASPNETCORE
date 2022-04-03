@@ -1,0 +1,26 @@
+﻿@model Song
+
+<h1>@ViewBag.Title</h1>
+
+<form asp-action="AddEdit" method="post">
+    <div asp-validation-summary="All"></div>
+        <div class="form-group">
+        <label asp-for="Title">Title </label>
+        <input asp-for="Title" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Album">Album </label>
+        <input asp-for="Album" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Artist">Artist </label>
+        <input asp-for="Artist" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReleaseDate">ReleaseDate </label>
+        <input asp-for="ReleaseDate" class="form-control"/>
+    </div>
+    <input type="hidden" asp-for="SongId" />
+    <button class="btn btn-primary" type="submit">Add</button>
+    <a asp-controller="Song" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

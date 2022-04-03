@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Song Page";
+}
+
+@model List<Song>
+
+<h1>@ViewBag.Title</h1>
+<table class="table-striped table-dark">
+    <thead>
+        <tr>
+        <td>ID</td>
+        <td>Title</td>
+        <td>Album</td>
+        <td>Artist</td>
+        <td>Release Date</td>
+    </tr>
+    </thead>
+    @foreach(Song s in Model)
+{
+    <tr>
+        <td>@s.SongId</td>
+        <td>@s.Title</td>
+        <td>@s.Album</td>
+        <td>@s.Artist</td>
+        <td>@s.ReleaseDate</td>
+        <td><a asp-controller="Song" asp-action="Edit" asp-route-id="@s.SongId" class="btn-primary">Edit</a></td>
+        <td><a asp-controller="Song" asp-action="Delete" asp-route-id="@s.SongId" class="btn-primary">Delete</a></td>
+    </tr>
+
+}
+</table>
+<a asp-controller="Song" asp-action="Add" class="btn-primary">Add</a>
