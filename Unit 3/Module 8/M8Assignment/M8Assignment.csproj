@@ -20,8 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Airport\" />
+    <Folder Include="Areas\Shared\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
