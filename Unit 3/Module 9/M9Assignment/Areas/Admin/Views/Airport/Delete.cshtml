@@ -1,0 +1,29 @@
+﻿@using M9Assignment.Admin.Models
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Airport
+
+<h1>Do you want to delete:</h1>
+<table class="table-striped table-dark">
+            <thead>
+                <tr>
+                <td>Code</td>
+                <td>Name</td>
+            </tr>
+            </thead>
+            <tr>
+                <td>@Model.Code</td>
+                <td>@Model.Name</td>
+             </tr>
+</table>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="AirportID" />
+    <input type="hidden" asp-for="Code" />
+    <input type="hidden" asp-for="Name" />
+    <button type="submit" class="btn-primary">Delete</button>
+    <a asp-controller="Airport" asp-action="Index" class="btn-primary" id="CancelButton">Cancel</a>
+</form>

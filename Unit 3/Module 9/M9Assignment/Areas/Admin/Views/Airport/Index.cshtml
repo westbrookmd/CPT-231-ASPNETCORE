@@ -1,0 +1,46 @@
+﻿@using M9Assignment.Admin.Models
+
+@*
+* Marshall Westbrook
+* CPT-231-S14
+* U3-M8 Assignment
+* Spring 2022
+* A project that demonstrates how areas work
+*@
+
+@{
+    ViewData["Title"] = "Admin Airport Index";
+}
+@model List<Airport>
+
+<div class="container">
+        <table class="table-striped table-dark">
+            <thead>
+                <tr>
+                <td>ID</td>
+                <td>Code</td>
+                <td>Name</td>
+            </tr>
+            </thead>
+            @foreach(Airport a in Model)
+        {
+            <tr>
+                <td>@a.AirportID</td>
+                <td>@a.Code</td>
+                <td>@a.Name</td>
+                <td>
+                    <a class="btn-primary" asp-controller="Airport" asp-action="Edit" asp-route-id="@a.AirportID">Edit</a>
+                </td>
+                <td>
+                    <a class="btn-primary" asp-controller="Airport" asp-action="Delete" asp-route-id="@a.AirportID">Delete</a>
+                </td>
+            </tr>
+        }
+        </table>
+        <div class="row mt-3 p-3">
+            <a asp-controller="Airport" asp-action="Add" class="btn-primary" id="AirportButton">Add</a>
+        </div>
+        <div class="row p-3">
+            <a asp-controller="Home" asp-area="" asp-action="Index" class="btn-primary" id="AirportButton">Back</a>
+        </div>
+</div>
