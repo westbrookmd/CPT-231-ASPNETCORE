@@ -1,0 +1,54 @@
+﻿@*
+* Marshall Westbrook
+* CPT-231-S14
+* U3-M9 Assignment
+* Spring 2022
+* A project that demonstrates how areas work with databases
+*@
+@{
+}
+<div class="container">
+    <div class="row mt-3 p-3">
+        <h2>Help Datatable</h2>
+        <p>Table with data goes here. Grab X amount of data depending on page size, use this value to grab paginated data models. Next button grabs the next X values by id. Back does opposite.
+            Disable buttons based on data model value max id. Not sure where the data constraint logic would go. </p>
+        <h2>Help Pages</h2>
+        <p> 
+            Pages are stored as models. A sample layout is below. I don't know how this is performed, but some form of link recognition layout/action could insert a table 
+            with all links that are found within the content property. I'd use zendesk/jira tickets as an example to find the smallest pieces of data to not create a cluttered model.
+        </p>
+        <table class="table-striped table-dark">
+            <thead>
+                <tr>
+                    <td>Model Property</td>
+                    <td>Part of Page</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Title</td>
+                    <td>h1 Tag</td>
+                </tr>
+                <tr>
+                    <td>Author</td>
+                    <td>transparent link below h1</td>
+                </tr>
+                <tr>
+                    <td>Date Created</td>
+                    <td>With author/title</td>
+                </tr>
+                <tr>
+                    <td>Content</td>
+                    <td>paragraph tag</td>
+                </tr>
+            </tbody>
+        </table>
+
+        </div>
+        <div class="row mt-3 p-3">
+            <a asp-controller="Help" asp-action="Next" class="btn-primary" id="AirportButton">Next</a>
+        </div>
+        <div class="row p-3">
+            <a asp-controller="Help" asp-action="Back" class="btn-primary" id="AirportButton">Back</a>
+        </div>
+</div>

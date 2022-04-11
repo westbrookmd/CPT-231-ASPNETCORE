@@ -17,9 +17,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Help\Data\" />
+    <Folder Include="Areas\Help\Models\" />
     <Folder Include="Migrations\" />
     <Folder Include="Models\" />
   </ItemGroup>

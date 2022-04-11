@@ -58,14 +58,14 @@ namespace M9Assignment
                 areaName: "Admin",
                 pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
             
+            endpoints.MapAreaControllerRoute(
+                name: "help",
+                areaName : "Help",
+                pattern: "Help/{controller=Home}/{action=Index}/{id?}");
+
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            
-            //endpoints.MapControllerRoute(
-            //    name: "Airport",
-            //    pattern: "{controller=Airport}/{action=Index}/{id?}");
             });
         }
     }
