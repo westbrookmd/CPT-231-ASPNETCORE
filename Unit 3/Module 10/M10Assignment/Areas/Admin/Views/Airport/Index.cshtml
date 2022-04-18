@@ -3,9 +3,9 @@
 @*
 * Marshall Westbrook
 * CPT-231-S14
-* U3-M9 Assignment
+* U3-M10 Assignment
 * Spring 2022
-* A project that demonstrates how areas work with databases
+* A project that demonstrates how to work with TempData (and retain some state)
 *@
 
 @{
@@ -13,6 +13,13 @@
 }
 @model List<Airport>
 
+@if (TempData.Keys.Contains("Notification"))
+{
+    <div class="alert alert-success alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+            @TempData["Notification"]
+    </div>
+}
 <div class="container">
         <table class="table-striped table-dark">
             <thead>

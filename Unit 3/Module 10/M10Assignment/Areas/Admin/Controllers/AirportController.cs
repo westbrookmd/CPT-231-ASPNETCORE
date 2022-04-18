@@ -34,12 +34,15 @@ namespace M10Assignment.Admin.Controllers
                 if (airport.AirportID != 0)
                 {
                     _airportContext.Airports.Update(airport);
+                    TempData["Notification"] = $"{airport.Name} has been updated.";
                 }
                 else
                 {
                     _airportContext.Airports.Add(airport);
+                    TempData["Notification"] = $"{airport.Name} has been added.";
                 }
                 _airportContext.SaveChanges();
+                
                 return RedirectToAction("Index", "Airport");
             }
             else
@@ -68,6 +71,7 @@ namespace M10Assignment.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(Airport airport)
         {
+            TempData["Notification"] = $"{airport.Name} has been deleted.";
             _airportContext.Airports.Remove(airport);
             _airportContext.SaveChanges();
             return RedirectToAction("Index", "Airport");
