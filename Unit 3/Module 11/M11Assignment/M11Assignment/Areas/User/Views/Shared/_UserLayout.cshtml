@@ -1,0 +1,11 @@
+﻿@{
+    string area = "";
+    if (ViewContext.RouteData.Values["area"] != null)
+    { 
+        area = ViewContext.RouteData.Values["area"].ToString();
+    }
+    string controller = ViewContext.RouteData.Values["controller"].ToString();
+    string action = ViewContext.RouteData.Values["action"].ToString();
+    Layout = "_Layout";
+}
+@RenderBody();

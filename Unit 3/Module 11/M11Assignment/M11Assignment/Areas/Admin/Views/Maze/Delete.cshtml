@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Room
+@{
+    ViewBag.Title = "Delete Room";
+}
+
+<h2>Confirm Deletion</h2>
+<h3>@Model.Description (@Model.X, @Model.Y)</h3>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="RoomId" />
+
+    <button type="submit" class="btn btn-primary">Delete</button>
+    <a asp-area="Admin" asp-controller="Maze" asp-action="Index" class="btn btn-primary">Cancel</a>
+</form>

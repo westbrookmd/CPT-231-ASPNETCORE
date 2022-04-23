@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model Room
+@if (TempData.Keys.Contains("Welcome"))
+{
+    <h1>@TempData["Welcome"]</h1>
+}
+
+<h2>@Model.Description</h2>
+<a class="@(@ViewBag.North.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.NorthID">North</a>
+<a class="@(@ViewBag.South.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.SouthID">South</a>
+<a class="@(@ViewBag.East.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.EastID">East</a>
+<a class="@(@ViewBag.West.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.WestID">West</a>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p><a asp-area="" asp-controller="Home" asp-action="Index" asp-route-id="1">Return to the start</a></p>
+</div>
