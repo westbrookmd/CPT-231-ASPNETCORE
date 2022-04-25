@@ -27,15 +27,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="nav nav-pills flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link  @(area == "" && controller =="Home" ? "text-light" : "text-dark") " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link  @(area == "" && controller =="Home" ? "active" : "") " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(area == "User" && controller =="Home" ? "text-light" : "text-dark ") "  asp-area="User" asp-controller="Home" asp-action="Index">User</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark @(area == "Admin" && controller =="Maze"? "text-light" : "text-dark ") " 
+                            <a class="nav-link  @(area == "Admin" && controller =="Maze"? "active" : "") " 
                                asp-area="Admin" asp-controller="Maze" asp-action="Index">Admin</a>
                         </li>
                     </ul>

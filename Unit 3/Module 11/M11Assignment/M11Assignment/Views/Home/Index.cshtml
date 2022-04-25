@@ -1,18 +1,44 @@
-﻿@{
+﻿@*
+* Marshall Westbrook
+* CPT-231-S14
+* U3-M11 Assignment
+* Spring 2022
+* A project that demonstrates how cookies and sessions work
+*@
+
+@{
     ViewData["Title"] = "Home Page";
 }
 @model Room
-@if (TempData.Keys.Contains("Welcome"))
-{
-    <h1>@TempData["Welcome"]</h1>
-}
-
-<h2>@Model.Description</h2>
-<a class="@(@ViewBag.North.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.NorthID">North</a>
-<a class="@(@ViewBag.South.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.SouthID">South</a>
-<a class="@(@ViewBag.East.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.EastID">East</a>
-<a class="@(@ViewBag.West.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.WestID">West</a>
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p><a asp-area="" asp-controller="Home" asp-action="Index" asp-route-id="1">Return to the start</a></p>
+    <h1 class="display-4">Maze Area </h1>
+    <p><a class="@(@Model.RoomId == 1 ? "invisible" : "")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="1">Return to the start</a></p>
+    <p><a asp-area="" asp-controller="Home" asp-action="RoomHistory">View Room History</a></p>
 </div>
+<div class="row justify-content-center">
+        <table class="table-borderless">
+            <thead>
+                <tr>
+                    <th colspan="3">Room Movement Options</th>
+                </tr>
+            </thead>
+            <tr>
+                <td></td>
+                <td><a class="@(@ViewBag.North.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.NorthID">North</a></td>
+                <td></td>
+            </tr>
+             <tr>
+                <td><a class="@(@ViewBag.West.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.WestID">West</a></td>
+                <td></td>
+                <td><a class="@(@ViewBag.East.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.EastID">East</a></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a class="@(@ViewBag.South.ToString() == "True" ? "" : "invisible")" asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@ViewBag.SouthID">South</a></td>
+                <td></td>
+            </tr>
+        </table>
+</div>
+
+
+
