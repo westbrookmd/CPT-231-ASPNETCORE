@@ -56,6 +56,7 @@ namespace M12Assignment
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
+                //Add these
                 googleOptions.ClientId = "clientid";
                 googleOptions.ClientSecret = "clientsecret";
             });

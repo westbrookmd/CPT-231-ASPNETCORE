@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using M12Assignment.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Linq;
 
 namespace M12Assignment.Controllers
 {
@@ -66,43 +69,72 @@ namespace M12Assignment.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GoogleResponse()
         {
-            ExternalLoginInfo info = await signInManager.GetExternalLoginInfoAsync();
-            if (info == null)
-                return RedirectToAction("Login");
 
-            var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
-            string[] userInfo = { info.Principal.FindFirst(ClaimTypes.Name).Value, info.Principal.FindFirst(ClaimTypes.Email).Value };
-            User loginInformation = new User() { Id = info.ProviderKey, UserName = info.Principal.FindFirst(ClaimTypes.Email).Value };
-            if (await roleManager.FindByNameAsync("Administrator") == null)
+            LoginViewModel loginViewModel = new LoginViewModel
             {
-                await roleManager.CreateAsync(new IdentityRole("Administrator"));
+            };
+
+            // Get the login information about the user from the external login provider
+            var info = await signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                ModelState
+                    .AddModelError(string.Empty, "Error loading external login information.");
+                loginViewModel.Username = info.ProviderKey;
+                return View("Login", loginViewModel);
             }
-            var addingRole = await userManager.AddToRoleAsync(loginInformation, "Administrator");
-            if (result.Succeeded)
+
+            // If the user already has a login (i.e if there is a record in AspNetUserLogins
+            // table) then sign-in the user with this external login provider
+            var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider,
+                info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+
+            if (signInResult.Succeeded)
+            {
+                var externalUser = new User()
+                {
+                    UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                };
+                var roleAdded = await userManager.AddToRoleAsync(externalUser, "Administrator");
                 return RedirectToAction("Index", "Home");
+            }
+            // If there is no record in AspNetUserLogins table, the user may not have
+            // a local account
             else
             {
-                LoginViewModel user = new LoginViewModel
-                {
-                    Username = info.Principal.FindFirst(ClaimTypes.Email).Value
-                };
+                // Get the email claim value
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
 
-                var signIn = await signInManager.PasswordSignInAsync(
-                    user.Username, user.Password, isPersistent: user.RememberMe,
-                    lockoutOnFailure: false);
-                if (signIn.Succeeded)
+                if (email != null)
                 {
-                    if (!string.IsNullOrEmpty(user.ReturnUrl) &&
-                        Url.IsLocalUrl(user.ReturnUrl))
+                    // Create a new user without password if we do not have a user already
+                    var user = await userManager.FindByEmailAsync(email);
+
+                    if (user == null)
                     {
-                        return Redirect(user.ReturnUrl);
+                        user = new User
+                        {
+                            UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                            Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        };
+
+                        await userManager.CreateAsync(user);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+
+                    // Add a login (i.e insert a row for the user in AspNetUserLogins table)
+                    await userManager.AddLoginAsync(user, info);
+                    var roleAdded = await userManager.AddToRoleAsync(user, "Administrator");
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    
+                    return RedirectToAction("Index", "Home");
                 }
-                return AccessDenied();
+
+                // If we cannot find the user email we cannot continue
+                ViewBag.ErrorTitle = $"Email claim not received from: {info.LoginProvider}";
+                ViewBag.ErrorMessage = "Please contact support on Pragim@PragimTech.com";
+
+                return View("Error");
             }
         }
 
