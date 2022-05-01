@@ -1,0 +1,32 @@
+﻿
+@model List<Room>
+
+@{
+    ViewData["Title"] = "Manage Maze";
+}
+
+<h1 class="mb-2">Manage Maze</h1>
+<h5 class="mt-1"><a asp-action="Add">Add a Room</a></h5>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr><th>Description</th><th>X</th><th>Y</th><th></th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (Room room in Model)
+        {
+            <tr>
+                <td>@room.Description</td>
+                <td>@room.X</td>
+                <td>@room.Y</td>
+                <td>
+                    <a asp-controller="Maze" asp-action="Edit"
+                        asp-route-id="@room.RoomId">Edit</a>
+                </td>
+                <td>
+                    <a asp-controller="Maze" asp-action="Delete"
+                        asp-route-id="@room.RoomId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

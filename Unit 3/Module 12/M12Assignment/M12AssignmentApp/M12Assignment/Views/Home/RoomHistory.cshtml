@@ -1,0 +1,35 @@
+﻿@*
+* Marshall Westbrook
+* CPT-231-S14
+* U3-M11 Assignment
+* Spring 2022
+* A project that demonstrates how cookies and sessions work
+*@
+@{
+}
+@model List<Room>
+<h3>Room History</h3>
+<div class="container">
+        <table class="table table-bordered table-striped table-dark">
+            <thead>
+                <tr>
+                    <th>Room ID</th>
+                    <th>Room X</th>
+                    <th>Room Y</th>
+                    <th>Room Description</th>
+                    <th>Jump Link</th>
+                </tr>
+            </thead>
+            @foreach(Room r in Model)
+            {
+            <tr>
+                <td>@r.RoomId </td>
+                <td>@r.X</td>
+                <td>@r.Y</td>
+                <td>@r.Description</td>
+                <td><a  asp-area="" asp-controller="Home" asp-action="Move" asp-route-id="@r.RoomId">Link</a></td>
+            </tr>
+            }
+        </table>
+</div>
+<a class="nav-pill" asp-area="" asp-controller="Home" asp-action="Index">Back to home</a>
